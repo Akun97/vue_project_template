@@ -1,5 +1,3 @@
-# protector_pc
-
 ## Project setup
 ```
 npm install
