@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import './plugins/element.js'
 import { get, post, put, del } from './api/axios'
+import '_c/import'
 
 Vue.config.productionTip = false;
 Vue.prototype.$get = get;

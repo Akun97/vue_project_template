@@ -30,24 +30,42 @@ module.exports = {
 	chainWebpack: config => {
 		config.resolve.alias
 		.set('@', path.join(__dirname,'src')) 
-		.set('_c', path.join(__dirname,'src/components'))
+    .set('_c', path.join(__dirname,'src/components'))
+    config.plugin('html').tap(args => {
+      args[0].title = 'VUE'
+      return args
+    })
   },
-	configureWebpack: ()=>{},
+	configureWebpack: config => {
+    // config['externals'] = {
+    //   'BMap': 'BMap'
+    // }
+  },
 	// CSS 相关选项
 	css: {
 		extract: process.env.NODE_ENV === 'production'? true : false, // 将组件内部的css提取到一个单独的css文件（只用在生产环境）
 		sourceMap: false, // 允许生成 CSS source maps?
-		// loaderOptions: {
-    //    css: {
-    //      // 这里的选项会传递给 css-loader
-    //    },
-		// 	  sass: {
-    //      // 这里的选项会传递给 sass-loader
-		// 	  },
-		// 	  postcss: {
-		// 		  // 这里的选项会传递给 postcss-loader
-    //    }
-		// }
+		loaderOptions: {
+      //css: {
+        //这里的选项会传递给 css-loader
+      //},
+      sass: {
+        //这里的选项会传递给 sass-loader
+        prependData: `@import "@/styles/main.scss";`
+      },
+      postcss: {
+        //这里的选项会传递给 postcss-loader
+        plugins: [
+          require('postcss-px-to-viewport') ({
+            viewportWidth: 1920,
+            viewportHeight: 1080,
+            viewportUnit: 'vw',
+            unitPrecision: 3,
+            minPixelValue: 1
+          })
+        ]
+      }
+		}
 	},
   //是否为 Babel 或 TypeScript 使用 thread-loader。该选项在系统的 CPU 有多于一个内核时自动启用，仅作用于生产构建
 	parallel: require("os").cpus().length > 1,

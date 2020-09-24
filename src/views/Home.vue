@@ -1,21 +1,16 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="123"/>
-    <router-view></router-view>
     <el-button @click="$router.push({name: 'About'})">{{test}}</el-button>
+    <hello-world msg="123"></hello-world>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 import {mapGetters, mapActions} from 'vuex';
-import HelloWorld from '@/components/HelloWorld.vue'
-
 export default {
   name: 'Home',
-  components: {
-    HelloWorld
-  },
   computed: {
     ...mapGetters(['test'])
   },
